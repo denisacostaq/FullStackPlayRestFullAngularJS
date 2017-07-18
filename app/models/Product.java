@@ -38,6 +38,19 @@ public class Product extends Model {
     //          DB OPERATIONS
     private static final Finder<Long, Product> finder = new Finder<>(Long.class, Product.class);
 
+    void decreaseEachItemStockInAmount(Long amount) throws Exception {
+        List<Item> items = Item.findAllByPropertie("product_id", this.getId());
+        for (Item item : items) {
+            item = Item.findByPropertie("id", item.getId());
+            if (item.getStock() < amount) {
+                throw new Exception("No se tiene stock suficiente del item: " + item.getId() + " para realizar la venta");
+            } else {
+                item.setStock(item.getStock() - amount);
+                Item.update(item);
+            }
+        }
+    }
+
     /**
      * This method search in the database all the Products.
      *
