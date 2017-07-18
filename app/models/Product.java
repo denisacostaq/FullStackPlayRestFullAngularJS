@@ -62,7 +62,7 @@ public class Product extends Model {
     }
 
     /**
-     * This method create an Product in database.
+     * This method create a Product in database.
      *
      * @param product
      * @throws Exception
@@ -85,7 +85,7 @@ public class Product extends Model {
     }
 
     /**
-     * This method update an Product.
+     * This method update a Product.
      *
      * @param product
      * @throws Exception
@@ -95,7 +95,7 @@ public class Product extends Model {
     }
 
     /**
-     * This method delete an Product
+     * This method delete a Product
      *
      * @param product
      * @throws Exception
@@ -116,7 +116,7 @@ public class Product extends Model {
     }
 
     /**
-     * Serialize an Product with a particular set of attributes.
+     * Serialize a Product with a particular set of attributes.
      *
      * @param view
      * @return JsonNode

@@ -53,7 +53,7 @@ public class Sale extends Model {
     }
 
     /**
-     * This method create an Sale in database.
+     * This method create a Sale in database.
      *
      * @warning(aacostadeb@gmail.com): Call this in a transaction.
      * @param sale
@@ -90,7 +90,7 @@ public class Sale extends Model {
     }
 
     /**
-     * Serialize an Sale with a particular set of attributes.
+     * Serialize a Sale with a particular set of attributes.
      *
      * @param view
      * @return JsonNode
