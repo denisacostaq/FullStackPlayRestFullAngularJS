@@ -7,3 +7,23 @@ GET     /                           controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+
+# Item
+GET          /api/v1.0/item                                  controllers.api.Item.list()
+POST         /api/v1.0/item                                  controllers.api.Item.create()
+GET          /api/v1.0/item/:id                              controllers.api.Item.retrive(id: Long)
+PUT          /api/v1.0/item/:id                              controllers.api.Item.update(id: Long)
+DELETE       /api/v1.0/item/:id                              controllers.api.Item.delete(id: Long)
+
+# Product
+GET          /api/v1.0/product                               controllers.api.Product.list()
+POST         /api/v1.0/product                               controllers.api.Product.create()
+GET          /api/v1.0/product/:id                           controllers.api.Product.retrive(id: Long)
+PUT          /api/v1.0/product/:id                           controllers.api.Product.update(id: Long)
+DELETE       /api/v1.0/product/:id                           controllers.api.Product.delete(id: Long)
+
+# Sale
+GET          /api/v1.0/sale                                  controllers.api.Sale.list()
+POST         /api/v1.0/sale                                  controllers.api.Sale.create()
+GET          /api/v1.0/sale/:id                              controllers.api.Sale.retrive(id: Long)
