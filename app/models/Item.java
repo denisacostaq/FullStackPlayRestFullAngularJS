@@ -174,4 +174,12 @@ public class Item extends Model {
     public void setStock(Long stock) {
         this.stock = stock;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }
