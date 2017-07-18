@@ -1,0 +1,28 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "A test for full stack \"skills\".",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aacostadeb/fullStackTestAacostadebFrontend.git"
+  },
+  "keywords": [
+    "angularjs",
+    "playframework",
+    "fullstack",
+    "example."
+  ],
+  "author": "Alvaro Denis Acosta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aacostadeb/fullStackTestAacostadebFrontend/issues"
+  },
+  "homepage": "https://github.com/aacostadeb/fullStackTestAacostadebFrontend#readme",
+  "dependencies": {
+    "angular": "^1.6.5"
+  }
+}
