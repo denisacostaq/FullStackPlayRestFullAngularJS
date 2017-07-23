@@ -4,13 +4,41 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html ng-app="companyApp">
     <head>
-        <title>TODO supply a title</title>
+        <title>Company App</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" media="screen" href="stylesheets/bootstrap.css">
+        <link rel="stylesheet" media="screen" href="node_modules/angularjs-toaster/toaster.css">
+        <script src="node_modules/angular/angular.js" type="text/javascript"></script>
+        <script src="node_modules/angular-route/angular-route.js" type="text/javascript"></script>
+        <script src="node_modules/angular-resource/angular-resource.js" type="text/javascript"></script>
+        <script src="node_modules/angular-animate/angular-animate.js" type="text/javascript"></script>
+        <script src="node_modules/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js" type="text/javascript"></script>
+        <script src="node_modules/angularjs-toaster/toaster.js" type="text/javascript"></script>
+        <script src="app/app.module.js" type="text/javascript"></script>
+        <script src="app/constants.js" type="text/javascript"></script>
+        <script src="app/item/item.module.js" type="text/javascript"></script>
+        <script src="app/item/item.component.js" type="text/javascript"></script>
+        <script src="app/product/product.module.js" type="text/javascript"></script>
+        <script src="app/product/product.component.js" type="text/javascript"></script>
+        <script src="app/sale/sale.module.js" type="text/javascript"></script>
+        <script src="app/sale/sale.component.js" type="text/javascript"></script>
     </head>
     <body>
-        <div>TODO write content</div>
+        <toaster-container 
+            toaster-options="{'time-out':{ 'toast-warning': 4000, 'toast-error': 6000, 'toast-info': 1000, 'toast-success': 2000 }, 'close-button':{ 'toast-error': true, 'toast-warning': false } }"></toaster-container>
+        <div class="navbar navbar-inverse">
+            <a class="navbar-brand" href="#!/products">Products</a>
+            <a class="navbar-brand" href="#!/items">Items</a>
+            <a class="navbar-brand" href="#!/sales">Sales</a>
+            <cart-summary />
+        </div>
+        <div class="alert alert-danger" ng-show="data.error">
+            Error ({{data.error.status}}). The product data was not loaded.
+            <a href="#!/app" class="alert-link">Click here to go to index</a>
+        </div>
+        <ng-view />
     </body>
 </html>
