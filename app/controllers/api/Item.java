@@ -77,7 +77,7 @@ public class Item extends Controller {
         Ebean.beginTransaction();
         try {
             models.Item item = models.Item.findByPropertie("id", id);
-            item.setProduct(null);
+            item.setProducts(null);
             item.update();
             models.Item.delete(item);
             Ebean.commitTransaction();

@@ -1,6 +1,7 @@
 package controllers.api;
 
 import java.util.List;
+import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import play.Logger;
 import play.mvc.Controller;
@@ -31,14 +32,20 @@ public class Product extends Controller {
             apiLogger.error(Messages.get("Product.create: " + productForm.errorsAsJson()));
             return badRequest(productForm.errorsAsJson());
         }
+        // NOTE(aacostadeb@gmail.com): the create operation on Product is performed in multiple database steps
+        // internaly, so `beginTransaction()`.
+        Ebean.beginTransaction();
         try {
             models.Product product = productForm.get();
             models.Product.create(product);
+            Ebean.commitTransaction();
             JsonNode serialized = product.jsonSerialization();
             return created(serialized);
         } catch (Exception e) {
             apiLogger.error(Messages.get("Product.create.UnexpectedError"), e);
             return internalServerError();
+        } finally {
+            Ebean.endTransaction();
         }
     }
 
@@ -60,26 +67,38 @@ public class Product extends Controller {
             apiLogger.error(Messages.get("Product.update: " + productForm.errorsAsJson()));
             return badRequest(productForm.errorsAsJson());
         }
+        // NOTE(aacostadeb@gmail.com): the update operation on Product is performed in multiple database steps
+        // internaly, so `beginTransaction()`.
+        Ebean.beginTransaction();
         try {
             models.Product product = productForm.get();
             product.setId(id);
             models.Product.update(product);
+            Ebean.commitTransaction();
             JsonNode serialized = product.jsonSerialization();
             return ok(serialized);
         } catch (Exception e) {
             apiLogger.error(Messages.get("Product.update.UnexpectedError"), e);
             return internalServerError();
+        } finally {
+            Ebean.endTransaction();
         }
     }
 
     public static Result delete(Long id) {
+        Ebean.beginTransaction();
         try {
             models.Product product = models.Product.findByPropertie("id", id);
+            product.setItems(null);
+            models.Product.update(product);
             models.Product.delete(product);
+            Ebean.commitTransaction();
             return ok();
         } catch (Exception e) {
             apiLogger.error(Messages.get("Product.delete.UnexpectedError"), e);
             return internalServerError();
+        } finally {
+            Ebean.endTransaction();
         }
     }
 
