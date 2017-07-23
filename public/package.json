@@ -23,6 +23,11 @@
   },
   "homepage": "https://github.com/aacostadeb/fullStackTestAacostadebFrontend#readme",
   "dependencies": {
-    "angular": "^1.6.5"
+    "angular": "^1.5.0",
+    "angular-resource": "^1.5.0",
+    "angular-route": "^1.5.0",
+    "angular-animate": "^1.5.0",
+    "angularjs-dropdown-multiselect": "^2.0.0-beta.10",
+    "angularjs-toaster": "^2.1.0"
   }
 }
