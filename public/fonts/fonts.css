@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Univers-light-cn';
+  src: url('UniversLTStd-LightCn.otf') format('truetype'), url('UniversLTStd-Black.otf') format("opentype");;
+  font-weight: normal;
+  font-style: normal;
+}
