@@ -1,23 +1,26 @@
 package models;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.io.IOException;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import play.data.validation.Constraints.Min;
+import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import play.data.validation.Constraints;
+import play.data.validation.Constraints.Min;
 import play.db.ebean.Model;
 
-@Entity(name = "t_sales")
+@Entity
+@Table(name = "t_sales")
 public class Sale extends Model {
 
     private interface DefaultView {

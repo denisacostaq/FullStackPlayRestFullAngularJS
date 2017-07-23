@@ -1,6 +1,5 @@
 package models;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -18,10 +17,11 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import play.data.validation.Constraints.MaxLength;
 import play.db.ebean.Model;
+import play.data.validation.Constraints.MaxLength;
 
-@Entity(name = "t_products")
+@Entity
+@Table(name = "t_products")
 public class Product extends Model {
 
     private interface DefaultView {

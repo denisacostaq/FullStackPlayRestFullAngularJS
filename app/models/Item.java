@@ -20,7 +20,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.data.validation.Constraints.Min;
 import play.db.ebean.Model;
 
-@Entity(name = "t_items")
+@Entity
+@Table(name = "t_items")
 public class Item extends Model {
 
     private interface DefaultView {
