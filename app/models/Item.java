@@ -1,13 +1,16 @@
 package models;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.io.IOException;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -36,8 +39,13 @@ public class Item extends Model {
     @JsonView({DefaultView.class})
     private Long stock;
 
-    @ManyToOne
-    private Product product;
+    @ManyToMany
+    @JoinTable(name = "item_product",
+            joinColumns = {
+                @JoinColumn(name = "item_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "product_id")})
+    private List<Product> products;
 
     //          DB OPERATIONS
     private static final Finder<Long, Item> finder = new Finder<>(Long.class, Item.class);
@@ -86,6 +94,17 @@ public class Item extends Model {
      */
     public static List<Item> findAllByPropertie(String key, Object obj) throws Exception {
         return finder.where().eq(key, obj).findList();
+    }
+
+    /**
+     * This method search in the database looking for all Items in a product.
+     *
+     * @param productId
+     * @return List<Item>
+     * @throws java.lang.Exception
+     */
+    public static List<Item> findItemsByProductId(Long productId) throws Exception {
+        return finder.fetch("products").where().eq("product_id", productId).findList();
     }
 
     /**
@@ -175,11 +194,11 @@ public class Item extends Model {
         this.stock = stock;
     }
 
-    public Product getProduct() {
-        return product;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

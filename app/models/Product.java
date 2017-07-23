@@ -3,10 +3,15 @@ package models;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.io.IOException;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlUpdate;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -35,12 +40,15 @@ public class Product extends Model {
     @JsonView({DefaultView.class})
     private String description;
 
+    @JsonView({DefaultView.class})
+    private List<Item> items;
+
     //          DB OPERATIONS
     private static final Finder<Long, Product> finder = new Finder<>(Long.class, Product.class);
 
     void decreaseEachItemStockInAmount(Long amount) throws Exception {
-        List<Item> items = Item.findAllByPropertie("product_id", this.getId());
-        for (Item item : items) {
+        List<Item> its = Item.findItemsByProductId(this.getId());
+        for (Item item : its) {
             item = Item.findByPropertie("id", item.getId());
             if (item.getStock() < amount) {
                 throw new Exception("No se tiene stock suficiente del item: " + item.getId() + " para realizar la venta");
@@ -49,6 +57,60 @@ public class Product extends Model {
                 Item.update(item);
             }
         }
+    }
+
+    /**
+     *
+     * @param items
+     * @param id
+     * @return An element from items with the same id value in the parameter, null if not found.
+     */
+    private static boolean hasElementFromListById(List<Item> items, Long id) {
+        if (items != null && !items.isEmpty()) {
+            for (Item item : items) {
+                if (Objects.equals(item.getId(), id)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Add incoming items not present in database and remove no incoming items present in database.
+     *
+     * @throws Exception
+     */
+    private void syncItems() throws Exception {
+        List<Item> retrivedItems = Item.findItemsByProductId(this.getId());
+        if (this.getItems() != null && !this.getItems().isEmpty()) {
+            for (Item item : this.getItems()) {
+                item = models.Item.findByPropertie("id", item.getId());
+                if (!hasElementFromListById(retrivedItems, item.getId())) {
+                    List<models.Product> products = item.getProducts();
+                    // add inconming
+                    products.add(this);
+                    item.setProducts(products);
+                    models.Item.update(item);
+                }
+            }
+        }
+        for (Item item : retrivedItems) {
+            item = models.Item.findByPropertie("id", item.getId());
+            if (!hasElementFromListById(this.getItems(), item.getId())) {
+                List<models.Product> products = item.getProducts();
+                // remove no inconming
+                products.remove(this);
+                item.setProducts(products);
+                models.Item.update(item);
+            }
+        }
+    }
+
+    private void unbindItems() throws Exception {
+        SqlUpdate down = Ebean.createSqlUpdate("DELETE from `item_product` WHERE `product_id` = :product_id;");
+        down.setParameter("product_id", this.getId());
+        down.execute();
     }
 
     /**
@@ -64,11 +126,13 @@ public class Product extends Model {
     /**
      * This method create a Product in database.
      *
+     * @warning(aacostadeb@gmail.com): Call this in a transaction.
      * @param product
      * @throws Exception
      */
     public static void create(Product product) throws Exception {
         product.save();
+        product.syncItems();
     }
 
     /**
@@ -87,20 +151,24 @@ public class Product extends Model {
     /**
      * This method update a Product.
      *
+     * @warning(aacostadeb@gmail.com): Call this in a transaction.
      * @param product
      * @throws Exception
      */
     public static void update(Product product) throws Exception {
         product.update();
+        product.syncItems();
     }
 
     /**
      * This method delete a Product
      *
+     * @warning(aacostadeb@gmail.com): Call this in a transaction.
      * @param product
      * @throws Exception
      */
     public static void delete(Product product) throws Exception {
+        product.unbindItems();
         product.delete();
     }
 
@@ -169,5 +237,13 @@ public class Product extends Model {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }
