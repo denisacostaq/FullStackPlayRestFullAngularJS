@@ -27,7 +27,7 @@ public class Sale extends Controller {
 
     @BodyParser.Of(BodyParser.Json.class)
     public static Result create() {
-        Form<models.Sale> saleForm = Form.form(models.Sale.class).bindFromRequest();
+        Form<models.Sale> saleForm = Form.form(models.Sale.class, models.Sale.creation.class).bindFromRequest();
         if (saleForm.hasErrors()) {
             apiLogger.error(Messages.get("Sale.create: " + saleForm.errorsAsJson()));
             return badRequest(saleForm.errorsAsJson());

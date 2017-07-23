@@ -23,6 +23,9 @@ public class Sale extends Model {
     private interface DefaultView {
     }
 
+    public interface creation {
+    }
+
     //          ATTRIBUTES
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,13 +33,17 @@ public class Sale extends Model {
     private Long id;
 
     @JsonView({DefaultView.class})
+    @Constraints.Required(groups = creation.class)
     private String buyer;
 
     @Min(0)
     @JsonView({DefaultView.class})
+    @Constraints.Required(groups = creation.class)
     private Long amount;
 
     @OneToOne
+    @JsonView({DefaultView.class})
+    @Constraints.Required(groups = creation.class)
     private Product product;
 
     //          DB OPERATIONS
