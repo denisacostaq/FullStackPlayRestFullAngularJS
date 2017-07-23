@@ -23,7 +23,7 @@ import play.db.ebean.Model;
 @Table(name = "t_sales")
 public class Sale extends Model {
 
-    private interface DefaultView {
+    private class DefaultView implements models.Product.DefaultView {
     }
 
     public interface creation {

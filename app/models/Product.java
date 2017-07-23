@@ -24,7 +24,7 @@ import play.data.validation.Constraints.MaxLength;
 @Table(name = "t_products")
 public class Product extends Model {
 
-    private interface DefaultView {
+    public interface DefaultView {
     }
 
     //          ATTRIBUTES
