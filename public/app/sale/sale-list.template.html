@@ -1,0 +1,22 @@
+<a href="#!/sales_new" class="btn-primary btn-lg nodecoration">Add</a>
+<div class="alert alert-warning" ng-show="$ctrl.sales.length == 0">
+  <p>There are no sales to show.</p>
+</div>
+<div class="container-fluid" ng-hide="$ctrl.sales.length == 0">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Buyer</th>
+        <th>Ammount</th>
+        <th>Product</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="sale in $ctrl.sales">
+        <td class="text-left">{{sale.buyer}}</td>
+        <td class="text-left">{{sale.amount}}</td>
+        <td class="text-left">{{sale.product.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
