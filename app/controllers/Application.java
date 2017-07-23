@@ -8,11 +8,8 @@ import views.html.*;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render("Your new application is ready."));
-    }
-    
-    public static Result appIndex() {
-        return ok(appIndex.render());
+//        return ok(index.render("Your new application is ready."));
+        return redirect("/assets/index.html#!/app");
     }
 
 }
