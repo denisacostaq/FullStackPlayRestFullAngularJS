@@ -1,0 +1,24 @@
+<a href="#!/items_new" class="btn-primary btn-lg nodecoration">Add</a>
+<div class="alert alert-warning" ng-show="$ctrl.items.length == 0">
+  <p>There are no items to show.</p>
+</div>
+<div class="container-fluid" ng-hide="$ctrl.items.length == 0">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Stock</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in $ctrl.items">
+        <td class="text-left">{{item.name}}</td>
+        <td class="text-left">{{item.stock}}</td>
+        <td>
+          <a class="btn btn-warning" ng-href="{{'#!/items/' + item.id}}">Edit</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
