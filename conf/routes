@@ -15,6 +15,7 @@ POST         /api/v1.0/item                                  controllers.api.Ite
 GET          /api/v1.0/item/:id                              controllers.api.Item.retrive(id: Long)
 PUT          /api/v1.0/item/:id                              controllers.api.Item.update(id: Long)
 DELETE       /api/v1.0/item/:id                              controllers.api.Item.delete(id: Long)
+GET          /api/v1.0/items/product/:productId              controllers.api.Item.itemsPerProduct(productId: Long)
 
 # Product
 GET          /api/v1.0/product                               controllers.api.Product.list()

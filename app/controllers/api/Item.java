@@ -90,4 +90,15 @@ public class Item extends Controller {
         }
     }
 
+    public static Result itemsPerProduct(Long productId) {
+        try {
+            List<models.Item> items = models.Item.findItemsByProductId(productId);
+            JsonNode serialized = models.Item.jsonListSerialization(items);
+            return ok(serialized);
+        } catch (Exception e) {
+            apiLogger.error(Messages.get("Item.itemsPerProduct.UnexpectedError"), e);
+            return internalServerError();
+        }
+    }
+
 }
