@@ -31,6 +31,19 @@ angular.module('sale')
           popupService.popupError('Error', 'Sale save failed')
         });
     }
+    $scope.getCssClasses = function (ngModelContoller) {
+      return {
+        'has-error': ngModelContoller.$pristine || (ngModelContoller.$invalid && ngModelContoller.$dirty),
+        'has-success': ngModelContoller.$valid && ngModelContoller.$dirty
+      };
+    }
+    $scope.canSave = function () {
+      if ($scope.selectedProductsModel.length > 0) {
+        return $scope.saleInfo.$dirty && $scope.saleInfo.$valid
+      } else {
+        return false
+      }
+    };
     this.loadProducts = function () {
       $scope.productsSettings = { searchField: 'label', enableSearch: true, selectionLimit: 1 }
       $scope.availableProductsModel = [];
