@@ -26,3 +26,4 @@ Frontend
 
 - List continue showing a recently removed element (async operations) after the redirection.
 - On [`this.loadProduct`](https://github.com/denisacostaq/FullStackPlayRestFullAngularJS/blob/master/public/app/product/product.component.js#L82) it should get a single result from the async calls to [`ProductResource.get`](https://github.com/denisacostaq/FullStackPlayRestFullAngularJS/blob/master/public/app/product/product.component.js#L84) and [`ItemResource.query`](https://github.com/denisacostaq/FullStackPlayRestFullAngularJS/blob/master/public/app/product/product.component.js#L94)
+- Use `ng-submit` on forms with only one input like [google search page](google.com) because the submition will happend when the user hits Enter in any input field.
